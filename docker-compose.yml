@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  telegram-scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: telegram-news-scraper
+    restart: unless-stopped
+
+    # Environment variables
+    env_file:
+      - .env
+
+    # Volumes for persistent data
+    volumes:
+      - ./logs:/app/logs:rw
+      - ./data:/app/data:rw
+      - telegram_session:/app/telegram_session
+
+    # Port mapping
+    ports:
+      - "8000:8000"
+
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# Named volumes for data persistence
+volumes:
+  telegram_session:
+    driver: local

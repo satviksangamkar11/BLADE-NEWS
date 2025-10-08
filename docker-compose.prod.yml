@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  telegram-scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: telegram-news-scraper-prod
+    restart: always
+
+    # Production environment variables
+    env_file:
+      - .env
+
+    # Production volumes (external for persistence)
+    volumes:
+      - logs:/app/logs:rw
+      - telegram_session:/app/telegram_session
+
+    # Production port configuration (typically no port mapping in prod)
+    # ports:
+    #   - "8000:8000"  # Comment out for production, use reverse proxy
+
+    # Production resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+
+    # Enhanced health check for production
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 90s
+
+    # Production logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+    # Security settings for production
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:noexec,nosuid,size=100m
+
+# Named volumes for production data persistence
+volumes:
+  logs:
+    driver: local
+  telegram_session:
+    driver: local

@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLADE NEWS - Modern Financial News Hub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Modern Color Palette */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a2e;
+            --bg-surface: #16213e;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --bg-glass: rgba(255, 255, 255, 0.08);
+
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8d4;
+            --text-muted: #8b8ba7;
+            --text-accent: #4facfe;
+
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background Animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            z-index: -1;
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .header {
+            padding: 40px 0;
+            text-align: center;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            margin: 24px 0 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .logo-icon {
+            font-size: 48px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .logo-text {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            font-weight: 400;
+        }
+
+
+        /* Controls */
+        .controls {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .refresh-btn {
+            background: var(--secondary-gradient);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 14px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .refresh-btn:active {
+            transform: translateY(0);
+        }
+
+        .refresh-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .refresh-btn:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .news-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .news-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .news-header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+
+        .news-time {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .news-content {
+            margin-bottom: 20px;
+        }
+
+        .news-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .news-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 32px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            margin-bottom: 40px;
+        }
+
+        .pagination-btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 12px 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: var(--accent-gradient);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .pagination-btn.active {
+            background: var(--accent-gradient);
+            color: white;
+        }
+
+        .page-info {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0 16px;
+        }
+
+        /* Loading States */
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--text-accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 24px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .empty-description {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .logo-text {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+
+            .news-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .news-card {
+                padding: 20px;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .pagination-btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            color: var(--text-primary);
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-color: rgba(67, 233, 123, 0.3);
+            background: rgba(67, 233, 123, 0.1);
+        }
+
+        .toast.error {
+            border-color: rgba(249, 115, 22, 0.3);
+            background: rgba(249, 115, 22, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header fade-in">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-newspaper logo-icon"></i>
+                    <h1 class="logo-text">BLADE NEWS</h1>
+                </div>
+                <p class="tagline">Advanced Financial & Crypto Intelligence Platform</p>
+            </div>
+        </header>
+
+
+        <!-- Controls -->
+        <section class="controls fade-in">
+            <button class="refresh-btn" id="refresh-btn">
+                <i class="fas fa-sync-alt"></i>
+                Refresh Feed
+            </button>
+        </section>
+
+        <!-- News Grid -->
+        <section class="news-grid" id="news-grid">
+            <!-- News cards will be injected here -->
+        </section>
+
+        <!-- Pagination -->
+        <section class="pagination" id="pagination" style="display: none;">
+            <!-- Pagination will be injected here -->
+        </section>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <script>
+        class BladeNewsApp {
+            constructor() {
+                this.currentPage = 1;
+                this.totalPages = 1;
+                this.perPage = 50;
+                this.isLoading = false;
+                // Try multiple possible backend URLs
+                this.apiBaseUrl = 'http://localhost:8000'; // FastAPI backend URL
+
+                // Alternative URLs to try if main one fails
+                this.alternativeUrls = [
+                    'http://127.0.0.1:8000',
+                    'http://localhost:5000',
+                    'http://127.0.0.1:5000'
+                ];
+                this.currentUrlIndex = 0;
+
+                this.init();
+            }
+
+            async init() {
+                this.setupEventListeners();
+
+                // Try to load data directly - health check is optional
+                console.log('Initializing frontend and loading data...');
+                this.loadNews();
+
+                // Auto-refresh every 5 minutes
+                setInterval(() => {
+                    if (!this.isLoading) {
+                        this.loadNews();
+                    }
+                }, 300000);
+            }
+
+            async checkBackendHealth(url = null) {
+                const urlsToTry = url ? [url] : [this.apiBaseUrl, ...this.alternativeUrls];
+
+                for (let i = 0; i < urlsToTry.length; i++) {
+                    const testUrl = urlsToTry[i];
+                    try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+                        console.log(`Checking backend health at: ${testUrl}/api/health`);
+
+                        const response = await fetch(`${testUrl}/api/health`, {
+                            signal: controller.signal
+                        });
+
+                        clearTimeout(timeoutId);
+
+                        if (response.ok) {
+                            const healthData = await response.json();
+                            console.log('Backend health check successful at:', testUrl, healthData);
+
+                            // Update the main URL if we found it on an alternative URL
+                            if (testUrl !== this.apiBaseUrl) {
+                                console.log(`Switching to working backend URL: ${testUrl}`);
+                                this.apiBaseUrl = testUrl;
+                            }
+
+                            return true;
+                        } else {
+                            console.warn(`Backend health check failed at ${testUrl} with status:`, response.status);
+                        }
+                    } catch (error) {
+                        console.warn(`Backend health check failed at ${testUrl}:`, error.message);
+                    }
+                }
+
+                console.warn('All backend URLs failed');
+                return false;
+            }
+
+            setupEventListeners() {
+                document.getElementById('refresh-btn').addEventListener('click', () => {
+                    this.loadNews();
+                });
+            }
+
+
+            async loadNews() {
+                if (this.isLoading) return;
+
+                this.isLoading = true;
+                this.showLoading();
+
+                try {
+                    const url = `${this.apiBaseUrl}/api/news?page=${this.currentPage}&per_page=${this.perPage}`;
+                    console.log(`Loading news from: ${url}`);
+                    const response = await fetch(url);
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('News loaded successfully:', data);
+                        this.displayNews(data.news);
+                        this.setupPagination(data);
+                        this.showToast('News loaded successfully', 'success');
+                    } else {
+                        console.warn('News API returned error status:', response.status, response.statusText);
+                        throw new Error(`News API returned ${response.status}: ${response.statusText}`);
+                    }
+                } catch (error) {
+                    console.warn('News API error:', error.message);
+
+                    // Check if it's a network error or server error
+                    if (error.message.includes('Failed to fetch') || error.name === 'AbortError') {
+                        // Network or timeout error - backend might be down
+                        let errorMessage = 'Cannot connect to the news server. ';
+
+                        if (error.name === 'AbortError') {
+                            errorMessage += 'Request timed out. ';
+                        } else {
+                            errorMessage += 'Please check if the FastAPI server is running on port 8000. ';
+                        }
+
+                        this.showError(errorMessage);
+                        this.showToast('Connection failed', 'error');
+                    } else {
+                        // Server error - backend is running but returned an error
+                        this.showError(`Server error: ${error.message}. Please try refreshing the page.`);
+                        this.showToast('Server error', 'warning');
+                    }
+                }
+
+                this.isLoading = false;
+            }
+
+            showLoading() {
+                const newsGrid = document.getElementById('news-grid');
+                newsGrid.innerHTML = `
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-text">Loading latest news...</div>
+                    </div>
+                `;
+            }
+
+            showError(message) {
+                const newsGrid = document.getElementById('news-grid');
+                newsGrid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle empty-icon" style="color: #f5576c;"></i>
+                        <h2 class="empty-title" style="color: #f5576c;">Connection Error</h2>
+                        <p class="empty-description">${message}</p>
+                        <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+                            <button class="refresh-btn" onclick="app.loadNews()">
+                                <i class="fas fa-sync-alt"></i>
+                                Retry Loading News
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            displayNews(newsItems) {
+                const newsGrid = document.getElementById('news-grid');
+
+                if (!newsItems || newsItems.length === 0) {
+                    newsGrid.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-newspaper empty-icon"></i>
+                            <h2 class="empty-title">No news found</h2>
+                            <p class="empty-description">Try adjusting your filters or check back later for updates.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const newsHtml = newsItems.map((item, index) => {
+                    const date = new Date(item.message_date);
+                    const timeAgo = this.getTimeAgo(date);
+
+                    return `
+                        <article class="news-card fade-in" style="animation-delay: ${index * 0.1}s">
+                            <header class="news-header">
+                                <div class="news-time">
+                                    <i class="fas fa-clock"></i>
+                                    ${timeAgo}
+                                </div>
+                            </header>
+                            <div class="news-content">
+                                <p class="news-text">${this.formatText(item.paraphrased_text)}</p>
+                            </div>
+                            <footer class="news-footer">
+                                <div class="timestamp">
+                                    ${date.toLocaleDateString()} ${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                </div>
+                            </footer>
+                        </article>
+                    `;
+                }).join('');
+
+                newsGrid.innerHTML = newsHtml;
+            }
+
+            displayMockNews() {
+                const mockNews = [
+                    {
+                        id: '1',
+                        channel: 'CryptoAlert',
+                        paraphrased_text: 'Bitcoin surges past $45,000 as institutional investors increase their holdings. Major corporations are reportedly adding BTC to their treasury reserves, signaling growing confidence in digital assets.',
+                        message_date: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+                        model_used: 'gemini-2.5-flash'
+                    },
+                    {
+                        id: '2',
+                        channel: 'FinanceDaily',
+                        paraphrased_text: 'Federal Reserve announces potential interest rate adjustments following latest inflation data. Market analysts predict significant impact on equity markets and bond yields in the coming weeks.',
+                        message_date: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
+                        model_used: 'gemini-2.0-flash'
+                    },
+                    {
+                        id: '3',
+                        channel: 'TechNews',
+                        paraphrased_text: 'Tesla reports record quarterly earnings, beating analyst expectations by 15%. Electric vehicle sales continue to drive revenue growth, with strong performance in international markets.',
+                        message_date: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
+                        model_used: 'gemini-2.5-flash-lite'
+                    },
+                    {
+                        id: '4',
+                        channel: 'MarketWatch',
+                        paraphrased_text: 'S&P 500 reaches new all-time high as technology sector leads gains. Healthcare and renewable energy stocks show strong performance amid positive earnings reports.',
+                        message_date: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
+                        model_used: 'gemini-2.0-flash'
+                    },
+                    {
+                        id: '5',
+                        channel: 'EconomicTimes',
+                        paraphrased_text: 'Global supply chain disruptions ease as shipping costs normalize. International trade volumes show recovery trends following recent geopolitical stabilization efforts.',
+                        message_date: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
+                        model_used: 'gemini-2.5-flash'
+                    },
+                    {
+                        id: '6',
+                        channel: 'BlockchainNews',
+                        paraphrased_text: 'Ethereum network upgrade successfully implemented, reducing transaction fees by approximately 30%. Developers report improved scalability and enhanced security features.',
+                        message_date: new Date(Date.now() - 16 * 60 * 60 * 1000).toISOString(),
+                        model_used: 'gemini-2.0-flash-lite'
+                    }
+                ];
+
+                this.displayNews(mockNews);
+                this.setupPagination({
+                    total_count: 150,
+                    page: 1,
+                    per_page: this.perPage,
+                    has_next: true,
+                    has_prev: false
+                });
+            }
+
+            setupPagination(data) {
+                const pagination = document.getElementById('pagination');
+                this.totalPages = Math.ceil(data.total_count / data.per_page);
+
+                if (this.totalPages <= 1) {
+                    pagination.style.display = 'none';
+                    return;
+                }
+
+                pagination.style.display = 'flex';
+
+                const paginationHtml = `
+                    <button class="pagination-btn" onclick="app.goToPage(1)" ${this.currentPage === 1 ? 'disabled' : ''}>
+                        <i class="fas fa-angle-double-left"></i>
+                        First
+                    </button>
+                    <button class="pagination-btn" onclick="app.goToPage(${this.currentPage - 1})" ${!data.has_prev ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-left"></i>
+                        Previous
+                    </button>
+                    <span class="page-info">Page ${this.currentPage} of ${this.totalPages}</span>
+                    <button class="pagination-btn" onclick="app.goToPage(${this.currentPage + 1})" ${!data.has_next ? 'disabled' : ''}>
+                        Next
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="pagination-btn" onclick="app.goToPage(${this.totalPages})" ${this.currentPage === this.totalPages ? 'disabled' : ''}>
+                        Last
+                        <i class="fas fa-angle-double-right"></i>
+                    </button>
+                `;
+
+                pagination.innerHTML = paginationHtml;
+            }
+
+            goToPage(page) {
+                if (page >= 1 && page <= this.totalPages && page !== this.currentPage) {
+                    this.currentPage = page;
+                    this.loadNews();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+
+            formatText(text) {
+                if (!text) return '';
+
+                // Remove error prefixes
+                text = text.replace(/^\[DUPLICATE\]\s*/i, '');
+                text = text.replace(/^💥 Error:\s*/i, '');
+
+                // Basic formatting
+                text = text.replace(/\n/g, '<br>');
+
+                return text.trim();
+            }
+
+            getTimeAgo(date) {
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMins / 60);
+                const diffDays = Math.floor(diffHours / 24);
+
+                if (diffMins < 1) return 'Just now';
+                if (diffMins < 60) return `${diffMins}m ago`;
+                if (diffHours < 24) return `${diffHours}h ago`;
+                if (diffDays < 7) return `${diffDays}d ago`;
+                return date.toLocaleDateString();
+            }
+
+            showToast(message, type = 'info') {
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.textContent = message;
+
+                const container = document.getElementById('toast-container');
+                container.appendChild(toast);
+
+                setTimeout(() => toast.classList.add('show'), 100);
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => container.removeChild(toast), 300);
+                }, 3000);
+            }
+        }
+
+        // Initialize app
+        const app = new BladeNewsApp();
+    </script>
+</body>
+</html>
